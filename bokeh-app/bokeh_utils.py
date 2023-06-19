@@ -15,6 +15,7 @@ from bokeh.palettes import all_palettes, interp_palette
 from bokeh.plotting import figure
 import nibabel as nib
 import numpy as np
+import os
 import pandas as pd
 import scipy.interpolate as interp
 import scipy.stats as stats
@@ -352,7 +353,15 @@ def three_row(anat_path, over_paths, thresh_path, meas, unit,
       p_r.title.text_font_style = 'bold'
 
       #KDE estimate
-      den = img_kde(over_masked[0], over_masked[1])
+      over_dir = os.path.dirname(over_paths[0])
+      over_names = [ os.path.basename(x).split('.')[0] for x in over_paths ] 
+      den_path = os.path.join(over_dir, f'{over_names[0]}_{over_names[1]}_den.npy')
+      try:
+
+         den = np.load(den_path)
+      except:
+         den = img_kde(over_masked[0], over_masked[1])
+         np.save(den_path, den)
       dens_palette = interp_palette(all_palettes['Plasma'][11], 255)
       dens_map = LinearColorMapper(low=np.percentile(den, 2.5),
                                    high=np.percentile(den, 97.5),
