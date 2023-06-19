@@ -1,1 +1,1 @@
-web: bokeh serve bokeh-app
+web: python -m bokeh serve bokeh-app --port=$PORT
