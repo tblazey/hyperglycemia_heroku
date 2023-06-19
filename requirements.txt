@@ -3,5 +3,6 @@ bokeh==3.1.1
 nibabel==4.0.1
 numpy==1.21.6
 pandas==1.4.3
+python==3.10
 scipy==1.9.0
 statsmodels==0.13.5
